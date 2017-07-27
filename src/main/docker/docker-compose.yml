@@ -1,0 +1,22 @@
+
+version: '2.1'
+services:
+  jenkins-master:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: doggie6/jenkins:2.71-alpine
+    restart: always
+    container_name: jenkins
+    hostname: jenkins
+    ports:
+    - "${JENKINS_EXTERNAL_PORT:-18083}:8080"
+    - "50000:50000/tcp"
+    volumes:
+    - jenkins-master-volume:/var/jenkins_home
+    environment:
+    - JENKINS_SLAVE_AGENT_PORT=50000
+
+
+volumes:
+  jenkins-master-volume: {}
